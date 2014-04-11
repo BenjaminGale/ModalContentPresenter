@@ -11,6 +11,7 @@ The control adheres to WPF best practices by providing dependency properties for
 
 The control can be used like this:
 
+```
 <c:ModalContentPresenter IsModal="{Binding DialogIsVisible}">
     <TabControl Margin="5">
             <Button Margin="55"
@@ -30,6 +31,7 @@ The control can be used like this:
     </c:ModalContentPresenter.ModalContent>
 
 </c:ModalContentPresenter>
+```
 
 Features:
 
