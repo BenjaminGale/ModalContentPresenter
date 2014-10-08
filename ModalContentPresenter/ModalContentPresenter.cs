@@ -243,6 +243,31 @@ namespace Benjamin.Gale.Controls
 
         #endregion
 
+        #region ICommands
+
+        // Command to invoke ShowModalContent()
+        public ICommand ShowModalContentCommand { get; private set; }
+
+        // Command to invoke HideModalContent()
+        public ICommand HideModalContentCommand { get; private set; }
+
+        /// <summary>
+        /// Creates commands and adds CommandBindings
+        /// </summary>
+        private void CreateCommands()
+        {
+            this.ShowModalContentCommand = new RoutedCommand();
+            this.HideModalContentCommand = new RoutedCommand();
+
+            CommandBinding showModalCommandBinding = new CommandBinding(this.ShowModalContentCommand, (sender, args) => this.ShowModalContent(), (sender, args) => args.CanExecute = true);
+            CommandBinding hideModalCommandBinding = new CommandBinding(this.HideModalContentCommand, (sender, args) => this.HideModalContent(), (sender, args) => args.CanExecute = true);
+
+            this.CommandBindings.Add(showModalCommandBinding);
+            this.CommandBindings.Add(hideModalCommandBinding);
+        }
+
+        #endregion
+
         #region ModalContentPresenter implementation
 
         static ModalContentPresenter()
@@ -270,6 +295,8 @@ namespace Benjamin.Gale.Controls
 
             layoutRoot.Children.Add(primaryContentPresenter);
             layoutRoot.Children.Add(overlay);
+
+            this.CreateCommands();
         }
 
         /// <summary>
