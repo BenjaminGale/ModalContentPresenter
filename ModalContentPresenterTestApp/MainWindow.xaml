@@ -33,7 +33,7 @@ limitations under the License.
             <TabItem Header="Tab two">
                 <Button Margin="55"
                         Padding="10"
-                        Command="{Binding ElementName=modalPresenter, Path=ShowModalContentCommand}">
+                        Command="{Binding Source={x:Static c:ModalContentPresenterCommands.ShowModalContent}}">
                     Show modal content by command binding
                 </Button>
             </TabItem>
@@ -49,7 +49,7 @@ limitations under the License.
                 </Button>
                 <Button Margin="10"
                         Padding="20"
-                        Command="{Binding ElementName=modalPresenter, Path=HideModalContentCommand}">
+                        Command="{Binding Source={x:Static c:ModalContentPresenterCommands.HideModalContent}}">
                     Hide modal content by command binding
                 </Button>
             </StackPanel>

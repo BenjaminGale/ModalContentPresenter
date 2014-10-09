@@ -24,6 +24,18 @@ using System.Windows.Media;
 namespace Benjamin.Gale.Controls
 {
     /// <summary>
+    /// Supplys commands for opening and closing the modal.
+    /// </summary>
+    public static class ModalContentPresenterCommands
+    {
+        // Command to invoke ShowModalContent()
+        public static readonly ICommand ShowModalContent = new RoutedCommand();
+
+        // Command to invoke HideModalContent()
+        public static readonly ICommand HideModalContent = new RoutedCommand();
+    }
+
+    /// <summary>
     /// Allows the display of modal content over another piece of content.
     /// </summary>
     [ContentProperty("Content")]
@@ -243,26 +255,17 @@ namespace Benjamin.Gale.Controls
 
         #endregion
 
-        #region ICommands
-
-        // Command to invoke ShowModalContent()
-        public ICommand ShowModalContentCommand { get; private set; }
-
-        // Command to invoke HideModalContent()
-        public ICommand HideModalContentCommand { get; private set; }
+        #region command bindings
 
         /// <summary>
-        /// Creates commands and adds CommandBindings
+        /// Add CommandBindings
         /// </summary>
         private void CreateCommands()
         {
-            this.ShowModalContentCommand = new RoutedCommand();
-            this.HideModalContentCommand = new RoutedCommand();
-
-            CommandBinding showModalCommandBinding = new CommandBinding(this.ShowModalContentCommand, (sender, args) => this.ShowModalContent(), (sender, args) => args.CanExecute = true);
-            CommandBinding hideModalCommandBinding = new CommandBinding(this.HideModalContentCommand, (sender, args) => this.HideModalContent(), (sender, args) => args.CanExecute = true);
-
+            CommandBinding showModalCommandBinding = new CommandBinding(ModalContentPresenterCommands.ShowModalContent, (sender, args) => this.ShowModalContent(), (sender, args) => args.CanExecute = !this.IsModal);
             this.CommandBindings.Add(showModalCommandBinding);
+
+            CommandBinding hideModalCommandBinding = new CommandBinding(ModalContentPresenterCommands.HideModalContent, (sender, args) => this.HideModalContent(), (sender, args) => args.CanExecute = this.IsModal);
             this.CommandBindings.Add(hideModalCommandBinding);
         }
 
@@ -296,7 +299,7 @@ namespace Benjamin.Gale.Controls
             layoutRoot.Children.Add(primaryContentPresenter);
             layoutRoot.Children.Add(overlay);
 
-            this.CreateCommands();
+            CreateCommands();
         }
 
         /// <summary>
