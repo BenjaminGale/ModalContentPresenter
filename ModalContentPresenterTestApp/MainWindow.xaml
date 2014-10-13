@@ -16,7 +16,7 @@ limitations under the License.
 <Window x:Class="Benjamin.Gale.ModalContentPresenterTestApp.MainWindow"
 	    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
 	    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-	    xmlns:c="clr-namespace:Benjamin.Gale.Controls;assembly=ModalContentPresenter"
+	    xmlns:c="clr-namespace:BenjaminGale.Controls;assembly=ModalContentPresenter"
         Title="Modal content test"
         Height="350"
         Width="525">
@@ -33,7 +33,7 @@ limitations under the License.
             <TabItem Header="Tab two">
                 <Button Margin="55"
                         Padding="10"
-                        Command="{Binding Source={x:Static c:ModalContentPresenterCommands.ShowModalContent}}">
+                        Command="{Binding Source={x:Static c:ModalContentCommands.ShowModalContent}}">
                     Show modal content by command binding
                 </Button>
             </TabItem>
@@ -49,7 +49,7 @@ limitations under the License.
                 </Button>
                 <Button Margin="10"
                         Padding="20"
-                        Command="{Binding Source={x:Static c:ModalContentPresenterCommands.HideModalContent}}">
+                        Command="{Binding Source={x:Static c:ModalContentCommands.HideModalContent}}">
                     Hide modal content by command binding
                 </Button>
             </StackPanel>
