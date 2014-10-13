@@ -27,7 +27,14 @@ limitations under the License.
                 <Button Margin="55"
                         Padding="10"
                         Click="ShowModalContent">
-                    Show modal content
+                    Show modal content by code behind
+                </Button>
+            </TabItem>
+            <TabItem Header="Tab two">
+                <Button Margin="55"
+                        Padding="10"
+                        Command="{Binding Source={x:Static c:ModalContentPresenterCommands.ShowModalContent}}">
+                    Show modal content by command binding
                 </Button>
             </TabItem>
         </TabControl>
@@ -35,10 +42,15 @@ limitations under the License.
         <c:ModalContentPresenter.ModalContent>
             <StackPanel Orientation="Vertical"
                         VerticalAlignment="Center">
-                <Button Margin="75"
-                        Padding="50"
+                <Button Margin="10"
+                        Padding="20"
                         Click="HideModalContent">
-                    Hide modal content
+                    Hide modal content by code behind
+                </Button>
+                <Button Margin="10"
+                        Padding="20"
+                        Command="{Binding Source={x:Static c:ModalContentPresenterCommands.HideModalContent}}">
+                    Hide modal content by command binding
                 </Button>
             </StackPanel>
         </c:ModalContentPresenter.ModalContent>
