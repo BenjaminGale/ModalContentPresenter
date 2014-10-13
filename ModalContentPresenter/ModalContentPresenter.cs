@@ -53,14 +53,21 @@ namespace BenjaminGale.Controls
         private object[] logicalChildren;
 
         /*
-         * When the modal content is displayed, the keyboard navigation mode of the primary 
-         * content is cached and then set to 'none'. When the modal content is hidden, the 
-         * keyboard navigation mode of the primary content is set back to the cached value.
-         * This stops the user being able to 'tab' into the primary content whilst the modal
-         * content is being displayed and restore the default value once the modal content
-         * is hidden.
+         * When the modal content is displayed, the directional and tabbed keyboard navigation 
+         * modes of the primary content are cached and then set to 'none'. When the modal 
+         * content is hidden, the keyboard navigation modes of the primary content is set back 
+         * to the cached value. This stops the user being able to navigate into the primary content 
+         * whilst the modal content is being displayed and restore the default value once the modal 
+         * content is hidden.
          */
-        private KeyboardNavigationMode cachedKeyboardNavigationMode;
+        private KeyboardNavigationMode cachedTabNavigationMode;
+        private KeyboardNavigationMode cachedDirectionalNavigationMode;
+        
+        /*
+         * When the modal content is displayed, cache the currently focused element so that
+         * it can be restored when the modal content is hidden.
+         */
+        private IInputElement cachedFocusedElement;
 
         /*
          * When modal content is shown or hidden, focus needs to be set on the 'next' element.
@@ -388,9 +395,13 @@ namespace BenjaminGale.Controls
                  * Cache the keyboard navigation mode of the primary content before setting it to
                  * 'none' so that it can be restored when the modal content is hidden.
                  */
-                control.cachedKeyboardNavigationMode = KeyboardNavigation.GetTabNavigation(control.primaryContentPresenter);
-                KeyboardNavigation.SetTabNavigation(control.primaryContentPresenter, KeyboardNavigationMode.None);
+                control.cachedTabNavigationMode = KeyboardNavigation.GetTabNavigation(control.primaryContentPresenter);
+                control.cachedDirectionalNavigationMode = KeyboardNavigation.GetDirectionalNavigation(control.primaryContentPresenter);
+                control.cachedFocusedElement = Keyboard.FocusedElement;
 
+                KeyboardNavigation.SetTabNavigation(control.primaryContentPresenter, KeyboardNavigationMode.None);
+                KeyboardNavigation.SetDirectionalNavigation(control.primaryContentPresenter, KeyboardNavigationMode.None);
+                
                 /*
                  * Show the overlay (which in turn shows the modal content as it is a child of
                  * the overlay) and move focus to the first logical element.
@@ -411,9 +422,12 @@ namespace BenjaminGale.Controls
                  * Restore the cached keyboard navigation value on the primary content and move
                  * focus to its first logical element.
                  */
-                KeyboardNavigation.SetTabNavigation(control.primaryContentPresenter, control.cachedKeyboardNavigationMode);
-                control.primaryContentPresenter.MoveFocus(traversalDirection);
+                KeyboardNavigation.SetTabNavigation(control.primaryContentPresenter, control.cachedTabNavigationMode);
+                KeyboardNavigation.SetDirectionalNavigation(control.primaryContentPresenter, control.cachedDirectionalNavigationMode);
 
+                Keyboard.Focus(control.cachedFocusedElement);
+
+                control.primaryContentPresenter.MoveFocus(traversalDirection);
                 control.RaiseModalContentHiddenEvents();
             }
         }
