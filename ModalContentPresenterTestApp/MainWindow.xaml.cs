@@ -13,17 +13,9 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
 
-namespace Benjamin.Gale.ModalContentPresenterTestApp
+namespace BenjaminGale.ModalContentPresenter.TestApplication
 {
 	/// <summary>
 	/// Interaction logic for Window1.xaml
@@ -34,15 +26,5 @@ namespace Benjamin.Gale.ModalContentPresenterTestApp
 		{
 			InitializeComponent();
 		}
-		
-		private void ShowModalContent(object sender, RoutedEventArgs e)
-        {
-            modalPresenter.ShowModalContent();
-        }
-
-        private void HideModalContent(object sender, RoutedEventArgs e)
-        {
-            modalPresenter.HideModalContent();
-        }
 	}
 }

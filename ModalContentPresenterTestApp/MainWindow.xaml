@@ -1,5 +1,5 @@
 <!-- 
-Copyright 2012 Benjamin Gale.
+Copyright 2012-2015 Benjamin Gale.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -13,46 +13,58 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
  -->
-<Window x:Class="Benjamin.Gale.ModalContentPresenterTestApp.MainWindow"
+<Window x:Class="BenjaminGale.ModalContentPresenter.TestApplication.MainWindow"
 	    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
 	    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
 	    xmlns:c="clr-namespace:BenjaminGale.Controls;assembly=ModalContentPresenter"
+        xmlns:vm="clr-namespace:BenjaminGale.ModalContentPresenter.TestApplication"
         Title="Modal content test"
         Height="350"
         Width="525">
+    
+    <Window.Resources>
+        <Style TargetType="{x:Type Button}">
+            <Setter Property="Margin" Value="5"/>
+            <Setter Property="Width" Value="100"/>
+            <Setter Property="Height" Value="30" />
+        </Style>
+    </Window.Resources>
+    
+    <Window.DataContext>
+        <vm:ViewModel />
+    </Window.DataContext>
 
-    <c:ModalContentPresenter x:Name="modalPresenter">
-        <TabControl Margin="5">
-            <TabItem Header="Tab one">
-                <Button Margin="55"
-                        Padding="10"
-                        Click="ShowModalContent">
-                    Show modal content by code behind
-                </Button>
-            </TabItem>
-            <TabItem Header="Tab two">
-                <Button Margin="55"
-                        Padding="10"
-                        Command="{Binding Source={x:Static c:ModalContentCommands.ShowModalContent}}">
-                    Show modal content by command binding
-                </Button>
-            </TabItem>
-        </TabControl>
+    <c:ModalContentPresenter x:Name="modalPresenter" IsModal="{Binding IsTiling}">
+
+        <Grid>
+            <Grid.RowDefinitions >
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+
+            <TabControl Margin="5" ItemsSource="{Binding Items}" SelectedItem="{Binding SelectedItem}"/>
+
+            <StackPanel Orientation="Horizontal" Grid.Row="1" HorizontalAlignment="Center">
+                <Button Content="Tile tabs" Command="{Binding TileCommand}"/>
+                <Button Content="Add tab" Command="{Binding AddCommand}"/>
+            </StackPanel>
+
+        </Grid>
 
         <c:ModalContentPresenter.ModalContent>
-            <StackPanel Orientation="Vertical"
-                        VerticalAlignment="Center">
-                <Button Margin="10"
-                        Padding="20"
-                        Click="HideModalContent">
-                    Hide modal content by code behind
-                </Button>
-                <Button Margin="10"
-                        Padding="20"
-                        Command="{Binding Source={x:Static c:ModalContentCommands.HideModalContent}}">
-                    Hide modal content by command binding
-                </Button>
-            </StackPanel>
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+
+                <ListView ItemsSource="{Binding Items}" SelectedItem="{Binding ModalSelection}" Margin="30" />
+
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Grid.Row="1">
+                    <Button Content="Select item" Command="{Binding CloseCommand}"/>
+                </StackPanel>
+
+            </Grid>
         </c:ModalContentPresenter.ModalContent>
 
     </c:ModalContentPresenter>

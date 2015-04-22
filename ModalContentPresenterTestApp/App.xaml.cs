@@ -19,7 +19,7 @@ using System.Data;
 using System.Xml;
 using System.Configuration;
 
-namespace ModalContentPresenterTestApp
+namespace BenjaminGale.ModalContentPresenter.TestApplication
 {
 	/// <summary>
 	/// Interaction logic for App.xaml
