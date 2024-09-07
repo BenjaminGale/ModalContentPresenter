@@ -1,10 +1,8 @@
-ModalContentPresenter
-=====================
+# ModalContentPresenter
 
 Easily display modal content in WPF applications.
 
-What is it?
------------
+## What is it?
 
 The `ModalContentPresenter` is a custom `FrameworkElement` that allows you to display modal content in WPF applications.
 The control adheres to WPF best practices by providing dependency properties for binding and routed events for reacting to state changes in the control.
@@ -41,11 +39,16 @@ Features:
  - Is only modal to the content it is covering, not the entire application.
  - can be used in an MVVM friendly way by binding to the IsModal property.
  
-Developer notes
----------------
+## Developer notes
 
 Note that the `ModalContentPresenter` derives from `FrameworkElement` rather than `Control` or `ContentControl`. The reason for this is that the other options allow the control to be re-skinned which didn't seem approriate to me because the `ModalContentPresenter` provides a behaviour rather than a look and feel. Deriving from `FrameworkElement` allowed me to effectivly hide the details of the internal structure of the control and stop the user from altering it.
 
 Deriving from `FrameworkElement`, however, brings it's own set of challenges. There are a lot of details that you **have** to implement yourself. This means the source code is a good example of how to implement your own custom `FrameworkElement`.
 
+## Stackoverflow answers
 
+Below are links to questions I have answered on Stackoverflow which describe how to use this control.
+
+- [The "pretty" way to make a modal dialog in WPF with Prism and MVVM Pattern](https://stackoverflow.com/a/26421078/577417)
+- [Multiple windows in WPF and the ability to tile them](https://stackoverflow.com/a/27635421/577417)
+- [Modal Popup and views communication under MVVM pattern on C#](https://stackoverflow.com/a/25821197/577417)
